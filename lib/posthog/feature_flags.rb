@@ -274,9 +274,9 @@ class PostHog
         if value.is_a?(Array)
           values_stringified = value.map { |val| val.to_s.downcase }
           if operator == 'exact'
-            return values_stringified.any?(override_value.to_s.downcase)
+            return values_stringified.any? { |val| val === override_value.to_s.downcase }
           else
-            return !values_stringified.any?(override_value.to_s.downcase)
+            return !values_stringified.any? { |val| val === override_value.to_s.downcase }
           end
         end
         if operator == 'exact'
