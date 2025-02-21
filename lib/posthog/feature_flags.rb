@@ -535,7 +535,7 @@ class PostHog
              Net::HTTPBadResponse,
              Net::HTTPHeaderSyntaxError,
              Net::ReadTimeout,
-             Net::WriteTimeout,
+             #Net::WriteTimeout,
              Net::ProtocolError => e
         logger.debug("Unable to complete request to #{uri}")
         raise
