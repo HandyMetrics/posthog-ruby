@@ -5,6 +5,17 @@ require 'posthog/version'
 require 'posthog/logging'
 require 'digest'
 
+def dig(hash, *keys)
+  haystack = hash
+  keys.each do |k|
+    return nil if haystack[k].nil?
+
+    haystack = haystack[k]
+  end
+
+  return haystack
+end
+
 class PostHog
 
   class InconclusiveMatchError < StandardError
@@ -373,9 +384,9 @@ class PostHog
 
       response = nil
       if [true, false].include? match_value
-        response = @feature_flags_by_key.dig(key, :filters, :payloads, match_value.to_s.to_sym)
+        response = dig(@feature_flags_by_key, key, :filters, :payloads, match_value.to_s.to_sym)
       elsif match_value.is_a? String
-        response = @feature_flags_by_key.dig(key, :filters, :payloads, match_value.to_sym)
+        response = dig(@feature_flags_by_key, key, :filters, :payloads, match_value.to_sym)
       end
       response
     end
